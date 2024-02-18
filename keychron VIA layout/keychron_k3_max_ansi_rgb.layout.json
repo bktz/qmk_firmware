@@ -2,7 +2,7 @@
   "name": "Keychron K3 Max ANSI RGB",
   "vendorProductId": 875825712,
   "macros": [
-    "MT(MOD_HYPR, KC_CAPS)",
+    "",
     "",
     "",
     "",
