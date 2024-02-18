@@ -17,10 +17,6 @@
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
 
-#define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_STATIC_LIGHT
-#define RGBLIGHT_LIMIT_VAL 255
-#define RGBLIGHT_SLEEP
-
 enum layers {
     MAC_BASE,
     MAC_FN,
@@ -114,11 +110,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
-
-void keyboard_post_init_user(void) {
-    rgblight_enable(); // Enables RGB
-    rgblight_mode(1);
-    rgblight_sethsv(HSV_WHITE);
-}
-
 
