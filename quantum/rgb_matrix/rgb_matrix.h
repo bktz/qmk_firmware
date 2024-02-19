@@ -77,12 +77,12 @@
 #endif
 
 #ifndef RGB_MATRIX_DEFAULT_MODE
-#    ifdef ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
-#        define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_LEFT_RIGHT
-#    else
+//#    ifdef ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
+//#        define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_LEFT_RIGHT
+//#    else
 // fallback to solid colors if RGB_MATRIX_CYCLE_LEFT_RIGHT is disabled in userspace
 #        define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_COLOR
-#    endif
+//#    endif
 #endif
 
 #ifndef RGB_MATRIX_DEFAULT_HUE
@@ -90,7 +90,7 @@
 #endif
 
 #ifndef RGB_MATRIX_DEFAULT_SAT
-#    define RGB_MATRIX_DEFAULT_SAT UINT8_MAX
+#    define RGB_MATRIX_DEFAULT_SAT 0
 #endif
 
 #ifndef RGB_MATRIX_DEFAULT_VAL
