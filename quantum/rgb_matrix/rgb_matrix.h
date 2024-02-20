@@ -85,6 +85,10 @@
 //#    endif
 #endif
 
+#ifndef RGB_DISABLE_WHEN_USB_SUSPENDED
+#        define RGB_DISABLE_WHEN_USB_SUSPENDED
+#endif
+
 #ifndef RGB_MATRIX_DEFAULT_HUE
 #    define RGB_MATRIX_DEFAULT_HUE 0
 #endif

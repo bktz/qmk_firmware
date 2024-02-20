@@ -64,7 +64,6 @@ bool process_shift_backspace(uint16_t keycode, keyrecord_t *record) {
     // Store the current modifier state in the variable for later reference
     mod_state = get_mods();
     switch (keycode) {
-
         case KC_BSPC:
         {
             // Initialize a boolean variable that keeps track
@@ -95,12 +94,10 @@ bool process_shift_backspace(uint16_t keycode, keyrecord_t *record) {
             // Let QMK process the KC_BSPC keycode as usual outside of shift
             return true;
         }
-
     }
     return true;
 };
 
-// clang-format on
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron_common(keycode, record)) {
         return false;
@@ -109,9 +106,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
     return true;
-}
+};
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    //Set RGB to RED when capslock enabled
     if (host_keyboard_led_state().caps_lock) {
         for (uint8_t i = led_min; i < led_max; i++) {
             if (g_led_config.flags[i] & LED_FLAG_KEYLIGHT) {
