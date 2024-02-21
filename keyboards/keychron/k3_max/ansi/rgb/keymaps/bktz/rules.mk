@@ -1,1 +1,2 @@
 VIA_ENABLE = yes
+AUTOCORRECT_ENABLE = yes

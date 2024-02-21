@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______,  BT_HST1,  BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
      _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,            _______,            _______,
-     _______,            _______,  _______,  _______,  _______,  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,            _______,  _______,  _______,
+     _______,            _______,  _______,  _______,  _______,  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,            _______,  _______,  AC_TOGG,
      _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  _______,  _______,  _______),
 
 [WIN_BASE] = LAYOUT_ansi_84(
@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______,  BT_HST1,  BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
      _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,            _______,            _______,
-     _______,            _______,  _______,  _______,  _______,  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,            _______,  _______,  _______,
+     _______,            _______,  _______,  _______,  _______,  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,            _______,  _______,  AC_TOGG,
      _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  _______,  _______,  _______)
 };
 
@@ -102,13 +102,52 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron_common(keycode, record)) {
         return false;
     }
-    if (!process_shift_backspace(keycode, record)){
-        return false;
-    }
+// Enable shift backspace for delete
+//    if (!process_shift_backspace(keycode, record)){
+//        return false;
+//    }
     return true;
 };
 
-bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+void rgb_for_configured_keycodes(uint8_t led_min, uint8_t led_max, uint8_t red, uint8_t green, uint8_t blue){
+    //Backlight mapped keys with GREEN
+    for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+        for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+            uint8_t index = g_led_config.matrix_co[row][col];
+
+            if (index >= led_min && index < led_max && index != NO_LED &&
+            keymap_key_to_keycode(get_highest_layer(layer_state), (keypos_t){col,row}) > KC_TRNS) {
+                rgb_matrix_set_color(index, red, green, blue);
+            }
+        }
+    }
+}
+
+void rgb_layer_color(uint8_t led_min, uint8_t led_max) {
+    //Set RGB color for each layer
+    for (uint8_t i = led_min; i < led_max; i++) {
+        switch(get_highest_layer(layer_state|default_layer_state)) {
+            case MAC_BASE:
+                rgb_matrix_set_color(i, RGB_PURPLE);
+                break;
+            case MAC_FN:
+                rgb_matrix_set_color(i, RGB_PURPLE);
+                rgb_for_configured_keycodes(led_min, led_max, RGB_RED);
+                break;
+            case WIN_BASE:
+                rgb_matrix_set_color(i, RGB_WHITE);
+                break;
+            case WIN_FN:
+                rgb_matrix_set_color(i, RGB_WHITE);
+                rgb_for_configured_keycodes(led_min, led_max, RGB_RED);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void rgb_red_for_capslock(uint8_t led_min, uint8_t led_max) {
     //Set RGB to RED when capslock enabled
     if (host_keyboard_led_state().caps_lock) {
         for (uint8_t i = led_min; i < led_max; i++) {
@@ -117,5 +156,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             }
         }
     }
+}
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    rgb_layer_color(led_min, led_max);
+    rgb_red_for_capslock(led_min, led_max);
     return false;
 }
