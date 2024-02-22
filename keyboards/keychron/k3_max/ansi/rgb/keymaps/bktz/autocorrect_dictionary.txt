@@ -1,3 +1,6 @@
+# Recompile auto-correct dictionary with the following command
+# qmk generate-autocorrect-data keyboards/keychron/k3_max/ansi/rgb/keymaps/bktz/autocorrect_dictionary.txt
+
 ## 10 most common words.
 # The words "there", "about", "their", "would", "people", "which", "could",
 # "think", "other", and "because" are among the most common words in English
