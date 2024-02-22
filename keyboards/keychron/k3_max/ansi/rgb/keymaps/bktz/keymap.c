@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
+#include "autocorrect_data.h"
 
 enum layers {
     MAC_BASE,
