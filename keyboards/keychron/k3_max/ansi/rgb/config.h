@@ -54,4 +54,7 @@
 #    define RGB_MATRIX_KEYPRESSES
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 
+/* Layers */
+#define DYNAMIC_KEYMAP_LAYER_COUNT 5
+
 #endif
