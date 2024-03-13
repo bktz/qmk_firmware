@@ -109,8 +109,13 @@ void rgb_layer_color(uint8_t led_min, uint8_t led_max) {
                 rgb_matrix_set_color(i, RGB_WHITE);
                 break;
             case WIN_FN:
-                rgb_matrix_set_color(i, RGB_WHITE);
-                rgb_for_configured_keycodes(led_min, led_max, RGB_RED);
+                if(IS_LAYER_ON(MOD_1)){
+                    rgb_matrix_set_color(i, RGB_PURPLE);
+                    rgb_for_configured_keycodes(led_min, led_max, RGB_RED);
+                }else{
+                    rgb_matrix_set_color(i, RGB_WHITE);
+                    rgb_for_configured_keycodes(led_min, led_max, RGB_RED);
+                }
                 break;
             case MOD_1:
                 rgb_matrix_set_color(i, RGB_PURPLE);
