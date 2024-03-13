@@ -149,7 +149,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
 
 #define RGBLIGHT_SLEEP  // allows us to use rgblight_suspend() and rgblight_wakeup() in keymap.c
-#define RGBLIGHT_TIMEOUT 120000  // 2min in ms
+#define RGBLIGHT_TIMEOUT 600000  // 10min in ms
 
 static uint32_t key_timer;           // timer for last keyboard activity, use 32bit value and function to make longer idle time possible
 static void refresh_rgb(void);       // refreshes the activity timer and RGB, invoke whenever any activity happens
